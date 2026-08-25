@@ -1,13 +1,15 @@
-import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Body from './Body';
-import Login from './Login';
-import Profile from './Profile';
+import Body from './components/Body';
+import Login from './components/Login';
+import Profile from './components/Profile';
+import {Provider} from 'react-redux';
+import {store} from './utils/store';
+
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
+    <Provider store={store}>
       <BrowserRouter basename='/'>
         <Routes>
           <Route path="/" element={<Body/>} >
@@ -16,6 +18,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      </Provider>
     </>
   )
 }
