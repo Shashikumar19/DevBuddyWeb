@@ -18,8 +18,12 @@ const Body = () => {
             const data = await axios.get(baseUrl + '/profile/view', { withCredentials: true });
             dispatch(addUser(data.data));
         } catch (error) {
-            navigate('/login')
-            console.log("Error", error)
+            console.log("Error", error?.response?.status)
+            if (error?.response?.status == '401') {
+                navigate('/login')
+            }
+
+            
         }
 
 
@@ -34,7 +38,7 @@ const Body = () => {
         <Navbar />
         <Outlet />
         <Footer />
-        <ToastContainer/>
+        <ToastContainer />
     </>
 }
 export default Body
