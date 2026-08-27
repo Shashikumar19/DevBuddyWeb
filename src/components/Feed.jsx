@@ -23,11 +23,22 @@ const Feed = () => {
         if (!feed) {
             fetchFeed()
         }
-
     }, [])
-
+    
+    if (feed?.length == 0 || !feed) return <div className="flex justify-center mt-3.5">
+        <div className="aura text-orange-600 bg-yellow-200 w-xl">
+            <div className="card bg-base-100 text-base-content">
+                <div className="card-body text-center">
+                    <p>No Feed Found</p>
+                </div>
+            </div>
+        </div>
+    </div>
     return <div className="flex justify-center mt-5">
-       {feed && <Card user={feed[0]}/>}
+        <div className="stack">
+        <Card user={feed[0]} />
+        </div>
+       
     </div>
 }
 export default Feed

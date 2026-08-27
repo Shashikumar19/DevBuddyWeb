@@ -1,8 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequests, removeRequests } from "../utils/requestsSlice";
 import { baseUrl } from "../utils/constants";
+import { toast } from "react-toastify";
+
 const Requests = () => {
     const dispatch = useDispatch();
     const requestList = useSelector(store => store.requests);
@@ -18,36 +20,26 @@ const Requests = () => {
     }
 
     useEffect(() => {
-        if (!requestList) {
-            fetchRequests();
-        }
-
+        fetchRequests();
     }, [])
 
 
-    const handleAcceptRequest = async (connectionId) => {
+    const handleUserAction = async (connectionId, status) => {
         try {
-            const requests = await axios.post(baseUrl + `/request/review/accepted/${connectionId}`, {}, { withCredentials: true });
+            const requests = await axios.post(baseUrl + `/request/review/${status}/${connectionId}`, {}, { withCredentials: true });
             dispatch(removeRequests(requests.data.data));
+            toast.success(`Connection Request ${status} Successfully`)
         } catch (error) {
             console.log(error);
         }
 
     }
-    const handleRejectRequest = async (connectionId) => {
-        try {
-            const requests = await axios.post(baseUrl + `/request/review/rejected/${connectionId}`, {}, { withCredentials: true });
-            dispatch(addRequests(requests.data.data));
-        } catch (error) {
-            console.log(error);
-        }
 
-    }
     if (requestList?.length == 0) return <div className="flex justify-center mt-3.5">
         <div className="aura text-orange-600 bg-yellow-200 w-xl">
             <div className="card bg-base-100 text-base-content">
                 <div className="card-body text-center">
-                    <p>No Requests Available</p>
+                    <p>No Requests Found</p>
                 </div>
             </div>
         </div>
@@ -68,8 +60,8 @@ const Requests = () => {
                         <p>{user?.about}</p>
                     </div>
                     <div className="flex gap-2.5 items-center">
-                        <button className="btn btn-secondary" onClick={() => { handleAcceptRequest(user?._id) }}>Accept</button>
-                        <button className="btn btn-primary" onClick={() => { handleRejectRequest(user?._id) }}>Reject</button>
+                        <button className="btn btn-secondary" onClick={() => { handleUserAction(user?._id, "accepted") }}>Accept</button>
+                        <button className="btn btn-primary" onClick={() => { handleUserAction(user?._id, "rejected") }}>Reject</button>
                     </div>
                 </div>
             </div>

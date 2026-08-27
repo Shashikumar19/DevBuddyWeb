@@ -6,7 +6,7 @@ const ConnectionCard = () => {
         <div className="aura text-orange-600 bg-yellow-200 w-xl">
             <div className="card bg-base-100 text-base-content">
                 <div className="card-body text-center">
-                    <p>No Connections Available</p>
+                    <p>No Connections Found</p>
                 </div>
             </div>
         </div>
