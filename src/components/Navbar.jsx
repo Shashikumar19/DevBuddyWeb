@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
@@ -13,7 +13,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
 
-    axios.post(baseUrl + '/logout',{},{withCredentials:true})
+    axios.post(baseUrl + '/logout', {}, { withCredentials: true })
       .then(response => {
         dispatch(removeUser());
         navigate('/login');
@@ -23,6 +23,7 @@ const Navbar = () => {
       });
 
   };
+
   return <div className="navbar bg-neutral shadow-sm">
     <div className="flex-1">
       <a className="btn btn-ghost text-xl"> DevBuddy</a>
@@ -30,7 +31,7 @@ const Navbar = () => {
     <div className="flex gap-2">
 
       {user && (
-        <> <div>Welcome, {user.firstName}</div> <div className="dropdown dropdown-end mr-4">
+        <> <div className="text-lg align-middle mt-1">Welcome, {user.firstName}</div> <div className="dropdown dropdown-end mr-4">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img
@@ -46,10 +47,17 @@ const Navbar = () => {
                 Profile
               </NavLink>
             </li>
-            <li><a>Settings</a></li>
-            <li><a onClick={handleLogout}>
+            <li><Link to={'/connections'}>Connections</Link></li>
+            <li>
+              <Link to='/requests'>
+                requests
+              </Link>
+
+            </li>
+            <li><Link onClick={handleLogout}>
               Logout
-            </a></li>
+            </Link></li>
+
           </ul>
         </div></>
       )
