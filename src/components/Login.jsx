@@ -41,7 +41,7 @@ const Login = () => {
             });
     };
 
-    return <div className="flex justify-center items-center h-screen bg-base-200">
+    return <div className="flex justify-center items-center bg-base-100 mt-32">
 
         <fieldset className="fieldset bg-neutral border-base-300 rounded-box w-md border p-10 justify-center">
             <div className="text-2xl font-bold mb-4 text-center">{isLoginFormEnable ? 'Log in to DevBuddy' :'SignUp to DevBuddy'}</div>
