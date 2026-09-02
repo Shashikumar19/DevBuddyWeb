@@ -7,6 +7,7 @@ import {store} from './utils/store';
 import Feed from './components/Feed';
 import Connections from './components/Connections';
 import Requests from './components/Requests';
+import Premium from './components/Premium';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
            <Route path="/" element={<Feed/>} />
            <Route path='/connections' element={<Connections/>}/>
            <Route path='/requests' element={<Requests/>} />
+          <Route path='/premium' element={<Premium/>} />
           </Route>
         </Routes>
       </BrowserRouter>

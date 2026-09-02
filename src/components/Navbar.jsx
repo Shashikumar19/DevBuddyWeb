@@ -52,12 +52,14 @@ const Navbar = () => {
               <Link to='/requests'>
                 Requests
               </Link>
-
             </li>
             <li><Link to='/'>
               Home
             </Link></li>
-             <li><Link onClick={handleLogout}>
+            <li><Link to='/premium'>
+              Premium
+            </Link></li>
+            <li><Link onClick={handleLogout}>
               Logout
             </Link></li>
 
