@@ -20,9 +20,8 @@ const Chat = () => {
         if (userId) {
             socket = createSoketConnection();
             socket.emit('chatjoin', { targetUser, userId });
-            socket.on('messageRecieved', ({ firstName, message }) => {
-                console.log("Message recieved", { firstName, message })
-                setMessage(pre => [...pre, { firstName, message }]);
+            socket.on('messageRecieved', ({ firstName, message,photoUrl }) => {
+                setMessage(pre => [...pre, { firstName, message,photoUrl }]);
             })
         }
 
@@ -63,7 +62,7 @@ const Chat = () => {
 
         if (!sendMessage) return alert('please enter valid mesage to send')
         const socket = createSoketConnection();
-        socket.emit('sendMessage', { firstName: user.firstName, targetUser, userId, message: sendMessage });
+        socket.emit('sendMessage', { firstName: user.firstName, targetUser, userId, message: sendMessage,photoUrl:user.photoUrl });
         setSendMessage('');
 
     }
@@ -79,13 +78,13 @@ const Chat = () => {
             <div ref={messagesContainerRef} className="h-120 overflow-auto scroll-auto">
                 {message && message?.map((item, index) => <div className="p-2" key={`${item.firstName}-${index}`}>
 
-                    {item.firstName !== user?.firstName ?
-                        <div className="chat chat-start">
+
+                        <div className={"chat "+(item.firstName !== user?.firstName ? "chat-start" :"chat-end") }>
                             <div className="chat-image avatar">
                                 <div className="w-10 rounded-full">
                                     <img
                                         alt="Tailwind CSS chat bubble component"
-                                        src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+                                        src={item?.photoUrl}
                                     />
                                 </div>
                             </div>
@@ -96,24 +95,7 @@ const Chat = () => {
                             </div>
                             <div className="chat-bubble">{item?.message}</div>
                             <div className="chat-footer opacity-50">Delivered</div>
-                        </div> :
-
-                        <div className="chat chat-end">
-                            <div className="chat-image avatar">
-                                <div className="w-10 rounded-full">
-                                    <img
-                                        alt="Tailwind CSS chat bubble component"
-                                        src="https://img.daisyui.com/images/profile/demo/anakeen@192.webp"
-                                    />
-                                </div>
-                            </div>
-                            <div className="chat-header">
-                                {item?.firstName}
-                                <time className="text-xs opacity-50">12:46</time>
-                            </div>
-                            <div className="chat-bubble">{item?.message}</div>
-                            <div className="chat-footer opacity-50">Seen at 12:46</div>
-                        </div>}
+                        </div>
                 </div>)}
             </div>
             <div className="absolute bottom-0 flex border-t-2 w-3xl p-3 border-black space-x-2">
