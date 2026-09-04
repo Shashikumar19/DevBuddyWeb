@@ -6,10 +6,10 @@ import { addConnections } from "../utils/connectionSlice";
 import ConnectionCard from "./ConnectionCard";
 const Connections = () => {
    const dispatch = useDispatch();
+
    const fetchConnections = async () => {
       try {
          const connectionList = await axios.get(baseUrl + '/user/connections', { withCredentials: true });
-         console.log("connection data ", connectionList?.data?.data);
          dispatch(addConnections(connectionList?.data?.data));
       } catch (error) {
          console.log("Error", error.message)
@@ -20,6 +20,7 @@ const Connections = () => {
    useEffect(() => {
       fetchConnections();
    }, [])
+   
    return <div>
       <ConnectionCard />
    </div>

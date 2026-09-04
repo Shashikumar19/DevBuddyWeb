@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 const ConnectionCard = () => {
     const connectionList = useSelector(store => store.connections);
 
@@ -13,8 +14,8 @@ const ConnectionCard = () => {
     </div>
 
 
-    return connectionList && connectionList.map((user) =>
-        <div className=" flex justify-center">
+    return connectionList && connectionList.map((user,index) =>
+        <div key={index} className=" flex justify-center">
             <div className="card bg-neutral text-neutral-content mt-3.5 p-4 w-xl">
                 <div className="flex items-center gap-10">
                     <div className="avatar">
@@ -27,6 +28,7 @@ const ConnectionCard = () => {
                         <p>{user?.age || ""}</p>
                         <p>{user?.about}</p>
                     </div>
+                     <Link to={"/chat/" + user._id}><button className="btn btn-primary">Chat</button></Link>
                 </div>
             </div>
         </div>
